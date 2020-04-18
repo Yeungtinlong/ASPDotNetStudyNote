@@ -26,4 +26,20 @@ var configValue = _configuration["MyKey"];
 
 ## 用户机密文件
 
-- secrets.json是用户机密文件，不会保存在项目目录中，保存在用户本地
+- secrets.json是用户机密文件，不会保存在项目目录中，而是保存在用户本地
+
+## 中间件
+
+### 添加静态文件中间件
+
+- 添加后可以通过目录访问wwwRoot下的静态文件
+
+```c#
+app.UseStaticFiles();
+```
+
+- 添加默认文件中间件
+
+```c#
+app.UseDefaultFiles();
+```
