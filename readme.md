@@ -50,7 +50,7 @@ defaultFilesOptions.DefaultFilesNames.Add("index.html");
 app.UseDefaultFiles(defaultFilesOptions);
 ```
 
-- 如果直接使用`UseDefaultFiles()`不填写参数，则会默认查找`Index.htm``Index.html``Default.htm``Default.html`
+- 如果直接使用`UseDefaultFiles()`不填写参数，则会默认查找`Index.htm`,`Index.html`,`Default.htm`,`Default.html`
 
 - 或者用`FileServerOptions`类
 
