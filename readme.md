@@ -24,6 +24,50 @@ public Startup(IConfiguration configuration) {
 var configValue = _configuration["MyKey"];
 ```
 
+注入日志组件`ILogger`打印日志，了解中间件执行顺序。
+- 执行到终端中间件则逆转传递方向，传出响应
+
+```c#
+public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger) {
+        if(env.IsDevelopment()) {
+            app.UseDeveloperExceptionPage();
+        }
+
+        app.UseRouting();
+
+        app.Use(async (context, next) => {
+            context.Response.ContentType = "text/plain;charset=utf-8";
+
+            logger.LogInformation("MW1: 传入请求");
+
+            await context.Response.WriteAsync("中间件一号");
+            await next();
+            logger.LogInformation("MW1: 传出响应");
+        });
+
+        app.Use(async (context, next) => {
+            context.Response.ContentType = "text/plain;charset=utf-8";
+
+            logger.LogInformation("MW2: 传入请求");
+
+            await context.Response.WriteAsync("中间件一号");
+            await next();
+            logger.LogInformation("MW2: 传出响应");
+        });
+        
+        app.UseEndpoints(endpoints => {
+            var processName = System.Diagnostics.Process.GetCurrentProcess().ProcessName;
+            var configValue = _configuration["MyKey"];
+
+            endpoints.MapGet("/", async context => {
+                await context.Response.WriteAsync("Hello World!");
+                logger.LogInformation("MW3: 处理请求并生成响应");
+            });
+        });
+    }
+}        
+```
+
 ## 用户机密文件
 
 - secrets.json是用户机密文件，不会保存在项目目录中，而是保存在用户本地
