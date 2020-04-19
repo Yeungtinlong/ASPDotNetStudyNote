@@ -18,14 +18,14 @@ public Startup(IConfiguration configuration) {
 }
 ```
 
-- 通过索引取得json属性
+通过索引取得json属性
 
 ```c#
 var configValue = _configuration["MyKey"];
 ```
 
 注入日志组件`ILogger`打印日志，了解中间件执行顺序。
-- 执行到终端中间件则逆转传递方向，传出响应
+- 执行到终端中间件则逆转传递方向，传出响应。
 
 ```c#
 public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger) {
@@ -74,17 +74,13 @@ public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<
 
 ## 中间件
 
-### 添加静态文件中间件
-
-- 添加后可以如跟目录一样访问wwwRoot下的静态文件
+添加静态文件中间件后，可以如跟目录一样访问wwwRoot下的静态文件
 
 ```c#
 app.UseStaticFiles();
 ```
 
-### 添加默认文件中间件
-
-- 修改访问网站响应的默认静态文件
+修改访问网站响应的默认静态文件
 
 ```c#
 DefaultFilesOptions defaultFilesOption = new DefaultFilesOptions();
@@ -96,7 +92,7 @@ app.UseDefaultFiles(defaultFilesOptions);
 
 - 如果直接使用`UseDefaultFiles()`不填写参数，则会默认查找`Index.htm`,`Index.html`,`Default.htm`,`Default.html`
 
-- 或者用`FileServerOptions`类
+或者用`FileServerOptions`类
 
 ```c#
 FileServerOptions fileServerOptions = new FileServerOptions();
@@ -109,3 +105,23 @@ app.UseFileServer(fileServerOptions);
 - 各种中间件通过输入`app.Use`的语法补偿可以找到
 - Asp.Net Core 默认不支持静态文件服务
 - `UseDefalutFiles()`必须注册在`UseStaticFiles()`前
+- `UseFileServer`结合了`UseStaticFiles`,`UseDefaultFiles`,`UseDirectoryBrowser`中间件的功能，不推荐使用，`UseDirectoryBrowser`会暴露文件目录
+
+## 开发者异常
+
+抛出异常
+
+```c#
+throw new Exception("抛出异常");
+```
+
+异常中间件
+
+```c#
+if(env.IsDevelopment()) {
+    app.UseDevelopmentExceptionPage();
+}
+```
+
+- `app.UseDevelopmentExceptionPage()` 必须趁早调用，在异常中间件调用前`throw`的异常不会抛出
+
