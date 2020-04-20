@@ -125,3 +125,27 @@ if(env.IsDevelopment()) {
 
 - `app.UseDevelopmentExceptionPage()` 必须趁早调用，在异常中间件调用前`throw`的异常不会抛出
 
+## 配置环境变量
+
+通过默认注入的`IWebHostEnvironment env`可以配置相关信息
+
+.net 自带`env.IsDevelopment()`,`env.IsStaging()`,`env.IsProduction()`
+
+```c#
+if(env.IsDevelopment()) {
+    app.UseDeveloperExceptionPage();
+}
+```
+
+- 可以通过自定义`env.IsEnvironment("")`来判断当前是否自定义的环境
+- 在开发环境中，在launchsettings.json文件设置环境变量
+- 而Staging或者Production变量，尽量在操作系统中配置
+
+## MVC
+
+- `View`: 包含显示逻辑，用于显示Controller提供给它的模型中数据
+- `Controller`: 处理Http请求,调用模型，选择对应的视图来呈现该模型
+- `Model`: 包含一组数据的类和管理该数据的逻辑信息
+
+- 用户展示层(MVC在此)、业务逻辑层、数据访问读取层
+
