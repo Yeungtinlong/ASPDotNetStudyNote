@@ -147,5 +147,36 @@ if(env.IsDevelopment()) {
 - `Controller`: 处理Http请求,调用模型，选择对应的视图来呈现该模型
 - `Model`: 包含一组数据的类和管理该数据的逻辑信息
 
-- 用户展示层(MVC在此)、业务逻辑层、数据访问读取层
+用户展示层(MVC在此)、业务逻辑层、数据访问读取层
 
+### 安装MVC
+
+注入MVC服务
+
+```c#
+public void ConfigureServices(IServiceCollection services) {
+    services.AddMvc(option => {
+        option.EnableEndpointRouting = false;
+    });
+}
+
+public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
+    if(env.IsDevelopment()) {
+        app.UseDeveloperExceptionPage();
+    }
+
+    app.UseRouting();
+    app.UseStaticFiles();
+    // 启用MVC中间件
+    app.UseMvcWithDefaultRoute();
+    app.UseEndpoints(endpoints => {
+        endpoints.MapGet("/", async context => {
+        await context.Response.WriteAsync("Hosting Environment: " + env.EnvironmentName);
+        });
+    });
+}
+```
+
+创建`Controllers`文件夹，添加-控制器
+
+- 启用MVC后，网址如localhost:5000/home/index，会寻找`HomeController`中的`Index`方法，如果找不到则会由终端中间件处理
