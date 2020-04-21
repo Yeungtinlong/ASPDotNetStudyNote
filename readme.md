@@ -179,4 +179,4 @@ public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
 
 创建`Controllers`文件夹，添加-控制器
 
-- 启用MVC后，网址如localhost:5000/home/index，会寻找`HomeController`中的`Index`方法，如果找不到则会由终端中间件处理
+- 启用MVC后，网址如`localhost:5000/home/index`，会寻找`HomeController`中的`Index`方法，如果找不到则会由终端中间件处理
