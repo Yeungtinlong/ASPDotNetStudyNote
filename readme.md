@@ -281,7 +281,7 @@ public IActionResult Details() {
 }
 ```
 
-```h5
+```html5
 // 没有这句没有智能提示
 @model StudentManagement.Models.Student
 <!DOCTYPE html>
@@ -316,3 +316,90 @@ public class HomeDetailsViewModel {
 ```
 
 对`Model`进行一层封装，此处的`PageTile`正是新加入的数据
+
+#### 使用迭代器遍历学生数据
+
+```c#
+public IActionResult Index() {
+    IEnumerable<Student> model = _studentRepository.GetAllStudents();
+    return View(model);
+}
+```
+
+```html5
+@model IEnumerable<StudentManagement.Models.Student>
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>名字</th>
+                <th>邮箱</th>
+                <th>班级名称</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach(var student in Model) {
+                    <tr>
+                        <td>
+                            @student.Id
+                        </td>
+                        <td>
+                            @student.Name
+                        </td>
+                        <td>
+                            @student.Email
+                        </td>
+                        <td>
+                            @student.Id
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</body>
+</html>
+```
+
+## View布局视图
+
+```html5
+// _Layout.cshtml
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+    <div>
+        @RenderBody()
+    </div>
+</body>
+</html>
+```
+
+```html5
+@model StudentManagement.ViewModels.HomeDetailsViewModel
+@{ 
+    // Layout所指路径布局页面的@RenderBody()会呈现本页面的内容
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+    <h3>@Model.PageTitle</h3>
+    <div>
+        姓名: @Model.Student.Name
+    </div>
+    <div>
+        班级: @Model.Student.ClassName
+    </div>
+    <div>
+        邮箱: @Model.Student.Email
+    </div>
+```
