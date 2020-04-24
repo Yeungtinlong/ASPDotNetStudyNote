@@ -180,3 +180,94 @@ public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
 创建`Controllers`文件夹，添加-控制器
 
 - 启用MVC后，网址如`localhost:5000/home/index`，会寻找`HomeController`中的`Index`方法，如果找不到则会由终端中间件处理
+
+- `AddMvcCore()`方法只会添加最核心的MVC服务
+- `AddMvc()`方法添加了所有必须的MVC服务
+- `AddMvc()`方法会在内部调用`AddMvcCore()`方法
+
+## 从控制器传递数据到视图
+
+### View
+
+`ViewData` 
+- 是弱类型的字典(dictionary)对象
+- 使用string类型的键值，存储和查找ViewData字典中的数据
+- 运行时动态解析
+- 没有智能提示，编译时也没有类型检测
+
+```c#
+// HomeController
+public IActionResult Details() {
+    Student model = _studentRepository.GetStudent(2);
+    ViewData["Page Title"] = "Student Details";
+    ViewData["Student"] = model;
+    return View();
+}
+```
+
+```html5
+@using StudentManagement.Models;
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+    <h3>@ViewData["PageTitle"]</h3>
+    @{
+        var student = ViewData["Student"] as Student;
+    }
+    <div>
+        姓名: @student.Name
+    </div>
+    <div>
+        班级: @student.ClassName
+    </div>
+    <div>
+        邮箱: @student.Email
+    </div>
+</body>
+</html>
+```
+
+`ViewBag` 
+- ViewBag是ViewData的包装器
+- ViewData使用字符串键名来存储和查询数据
+- ViewBag使用动态属性来存储和查询数据
+- 均是在运行时动态解析
+
+```c#
+public IActionResult Details() {
+    Student model = _studentRepository.GetStudent(2);
+    ViewBag.PageTitle = "Student Details";
+    ViewBag.Student = model;
+    return View();
+}
+```
+
+```html5
+@using StudentManagement.Models;
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+    <h3>@ViewBag.PageTitle</h3>
+    <div>
+        姓名: @ViewBag.Student.Name
+    </div>
+    <div>
+        班级: @ViewBag.Student.ClassName
+    </div>
+    <div>
+        邮箱: @ViewBag.Student.Email
+    </div>
+</body>
+</html>
+```
+
+`强类型视图`
+- 首选采用强类型进行传输
