@@ -370,6 +370,13 @@ public IActionResult Index() {
 
 ## View布局视图
 
+- 让web应用程序中所有的视图保持外观一致性
+- 布局视图看起来像`ASP.NET Web Form`中的母版页
+- 布局视图也具有`.cshtml`扩展名
+- 在`ASP.NET Core MVC`中，默认情况下布局文件名为`_Layout.cshtml`
+- 布局视图文件通常放在`Views/Shared`
+- 在一个应用程序中可以包含多个布局视图文件
+
 ```html5
 // _Layout.cshtml
 <!DOCTYPE html>
@@ -403,3 +410,4 @@ public IActionResult Index() {
         邮箱: @Model.Student.Email
     </div>
 ```
+
