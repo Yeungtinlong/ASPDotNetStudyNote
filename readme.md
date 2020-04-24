@@ -281,7 +281,7 @@ public IActionResult Details() {
 }
 ```
 
-```html5
+```h5
 // 没有这句没有智能提示
 @model StudentManagement.Models.Student
 <!DOCTYPE html>
@@ -303,3 +303,16 @@ public IActionResult Details() {
 </body>
 </html>
 ```
+
+#### 数据传输对象DTO
+
+当使用强类型时，若要增加数据可以使用`ViewModel`
+
+```c#
+public class HomeDetailsViewModel {
+    public Student Student { get; set; }
+    public string PageTitle { get; set; }
+}
+```
+
+对`Model`进行一层封装，此处的`PageTile`正是新加入的数据
