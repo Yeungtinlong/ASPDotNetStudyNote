@@ -272,3 +272,34 @@ public IActionResult Details() {
 ### 强类型视图
 
 - 首选采用强类型进行传输
+
+```c#
+public IActionResult Details() {
+    Student model = _studentRepository.GetStudent(2);
+
+    return View(model);
+}
+```
+
+```html5
+// 没有这句没有智能提示
+@model StudentManagement.Models.Student
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+    <h3>@ViewBag.PageTitle</h3>
+    <div>
+        姓名: @Model.Name
+    </div>
+    <div>
+        班级: @Model.ClassName
+    </div>
+    <div>
+        邮箱: @Model.Email
+    </div>
+</body>
+</html>
+```
