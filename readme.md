@@ -187,9 +187,8 @@ public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
 
 ## 从控制器传递数据到视图
 
-### View
+### ViewData
 
-`ViewData` 
 - 是弱类型的字典(dictionary)对象
 - 使用string类型的键值，存储和查找ViewData字典中的数据
 - 运行时动态解析
@@ -231,7 +230,8 @@ public IActionResult Details() {
 </html>
 ```
 
-`ViewBag` 
+### ViewBag`
+
 - ViewBag是ViewData的包装器
 - ViewData使用字符串键名来存储和查询数据
 - ViewBag使用动态属性来存储和查询数据
@@ -269,5 +269,6 @@ public IActionResult Details() {
 </html>
 ```
 
-`强类型视图`
+### 强类型视图
+
 - 首选采用强类型进行传输
