@@ -457,7 +457,7 @@ public IActionResult Index() {
 </html>
 ```
 
-### ViewStart
+## ViewStart
 
 ```
 @{
@@ -468,3 +468,25 @@ public IActionResult Index() {
 - 创建于`Views`根目录下，帮助所有页面加载`_Layout.cshtml`的布局
 - 若再创建一个`_ViewStart.cshtml`于`Views`目录的子目录下，则该目录的视图优先使用该目录的`_ViewStart.cshtml`
 
+- ViewStart中的代码会在单个视图中的代码之前执行
+- 移动公用代码到ViewStart视图中，如给布局视图文件设置属性
+- ViewStart减少了代码冗余，提高了可维护性
+- ViewStart文件支持分层
+
+## ViewImports
+
+- `_ViewImports.cshtml`文件通常放在Views文件夹中
+- 包含公共命名空间
+
+```
+@using StudentManagement.Models
+@using StudentManagement.ViewModels
+```
+
+## 路由
+
+### 常规路由
+
+如`http://localhost:3290/Home/Index`这个Url\n
+
+会映射到`HomeController`类，以及其中的`Index()`操作方法
