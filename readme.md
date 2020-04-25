@@ -411,3 +411,48 @@ public IActionResult Index() {
     </div>
 ```
 
+## Section
+
+在特定`html`节点添加`JS`节点
+
+```html5
+@model StudentManagement.ViewModels.HomeDetailsViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    //ViewBag.Tile = "学生详情页";
+}
+
+<h3>@Model.PageTitle</h3>
+<div>
+    姓名: @Model.Student.Name
+</div>
+<div>
+    班级: @Model.Student.ClassName
+</div>
+<div>
+    邮箱: @Model.Student.Email
+</div>
+// 定义该代码片段为Scripts
+@section Scripts{
+    <script src="~/js/CustomScript.js"></script>
+}
+```
+
+```html5
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+    <div>
+        @RenderBody()
+    </div>
+    // Scripts在此处引入
+    @if(IsSectionDefined("Scripts")) {
+        @RenderSection("Scripts")
+    }
+</body>
+</html>
+```
