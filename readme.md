@@ -487,6 +487,21 @@ public IActionResult Index() {
 
 ### 常规路由
 
-如`http://localhost:3290/Home/Index`这个Url\n
+如`http://localhost:3290/Home/Index`这个Url，会映射到`HomeController`类中的`Index()`操作方法
 
-会映射到`HomeController`类，以及其中的`Index()`操作方法
+```c#
+public class HomeController : Controller {
+    private readonly IStudentRepository _studentRepository;
+
+    public HomeController(IStudentRepository studentRepository) {
+        _studentRepository = studentRepository;
+    }
+
+    public IActionResult Index() {
+        IEnumerable<Student> model = _studentRepository.GetAllStudents();
+        return View(model);
+    }
+}
+```
+
+如果是`http://localhost:3290/Home/Index/1`则会为`Index()`操作方法传入参数
