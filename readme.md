@@ -456,3 +456,15 @@ public IActionResult Index() {
 </body>
 </html>
 ```
+
+### ViewStart
+
+```
+@{
+    Layout = "_Layout";
+}
+```
+
+- 创建于`Views`根目录下，帮助所有页面加载`_Layout.cshtml`的布局
+- 若再创建一个`_ViewStart.cshtml`于`Views`目录的子目录下，则该目录的视图优先使用该目录的`_ViewStart.cshtml`
+
