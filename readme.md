@@ -505,3 +505,58 @@ public class HomeController : Controller {
 ```
 
 如果是`http://localhost:3290/Home/Index/1`则会为`Index()`操作方法传入参数
+
+- 默认的路由映射规则在中间件`app.UseMvcDefaultRoute()`已经配置好
+
+可以使用`app.UseMvc()`手动配置
+
+```c#
+app.UseMvc(routes => {
+    routes.MapRoute("default", "{controller=home}/{action=Index}/{id?}");
+});
+```
+
+### 属性路由
+
+- 在`控制器类`或者`操作方法`上加上路由特性
+- MVC会直接找到对应操作方法，而忽略Controller的类名
+
+```c#
+[Route("Home/Index/Details/{id?}")]
+    public IActionResult Details(int? id) {
+    HomeDetailsViewModel homeDetailsViewModel = new HomeDetailsViewModel() {
+        Student = _studentRepository.GetStudent(id??1),
+        PageTitle = "学生详细信息"
+    };
+
+    return View(homeDetailsViewModel);
+}
+```
+
+```c#
+public class HomeController : Controller {
+    private readonly IStudentRepository _studentRepository;
+
+    public HomeController(IStudentRepository studentRepository) {
+        _studentRepository = studentRepository;
+    }
+
+    [Route("")]
+    [Route("Home")]
+    [Route("Home/Index")]
+    public IActionResult Index() {
+        IEnumerable<Student> model = _studentRepository.GetAllStudents();
+        return View("~/Views/Home/Index.cshtml", model);
+    }
+
+    [Route("Home/Details/{id?}")]
+    public IActionResult Details(int? id) {
+        HomeDetailsViewModel homeDetailsViewModel = new HomeDetailsViewModel() {
+            Student = _studentRepository.GetStudent(id??1),
+            PageTitle = "学生详细信息"
+        };
+
+        return View("~/Views/Home/Details.cshtml", homeDetailsViewModel);
+    }
+}
+```
