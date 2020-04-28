@@ -508,7 +508,7 @@ public class HomeController : Controller {
 
 - 默认的路由映射规则在中间件`app.UseMvcDefaultRoute()`已经配置好
 
-可以使用`app.UseMvc()`手动配置
+- 也可以使用`app.UseMvc()`手动配置
 
 ```c#
 app.UseMvc(routes => {
@@ -560,3 +560,9 @@ public class HomeController : Controller {
     }
 }
 ```
+
+## LibMan包管理器
+
+- 右键项目`添加-客户端库`
+- 会自动生成`libman.json`文件在项目根目录下
+- 编辑`libman.json`文件可以修改版本号，右键`libman.json`文件可以清理、还原客户端库
