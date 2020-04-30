@@ -592,3 +592,20 @@ TagHelper写法:
 
 ### Environment Tag Helper
 
+用于在不同环境变量下加载不同的html代码块
+
+```html
+<environment include="Development">
+    <link href="~/lib/twitter-bootstrap/css/bootstrap.css" rel="stylesheet" />
+</environment>
+<environment exclude="Development">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+        crossorigin="anonymous"
+          >
+</environment>
+```
+
+- `<link>`元素上的`integrity`用于检查`子资源完整性`
+- SRI是一种安全功能
+
