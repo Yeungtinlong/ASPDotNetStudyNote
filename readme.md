@@ -566,3 +566,29 @@ public class HomeController : Controller {
 - 右键项目`添加-客户端库`
 - 会自动生成`libman.json`文件在项目根目录下
 - 编辑`libman.json`文件可以修改版本号，右键`libman.json`文件可以清理、还原客户端库
+
+## TagHelper
+
+传统HtmlHelper写法：
+
+```
+// 生成一个a标签
+@Html.ActionLink("查看", "details", "home", new { id = student.Id })
+// 设置a标签的URL
+<a href="@Url.Action("details", "home", new { id = student.Id })"><\a>
+```
+
+TagHelper写法:
+
+```html
+<a asp-controller="home" asp-action="details" asp-route-id="@student.Id" class="btn btn-primary">查看</a>
+```
+
+### Image Tag Helper
+
+- `image TagHelper` 增强了`<img>`标签，为静态图像文件提供了`缓存破坏服务`
+
+- 唯一的散列值并将其附加到图片的URL。此唯一字符串会提示浏览器从服务器重新加载图片，而不是从浏览器缓存重新加载
+
+### Environment Tag Helper
+
