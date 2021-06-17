@@ -1,4 +1,4 @@
-# Asp.net core 学习
+# Asp.net core 学习笔记
 
 基于.Net core 3.1的学习笔记
 
